@@ -15,7 +15,7 @@ public class LocalRedisConfig {
     private RedisServer redisServer;
 
     @PostConstruct
-    public void starlRedis() {
+    public void startRedis() {
         redisServer = new RedisServer(redisPort);
         redisServer.start();
     }
