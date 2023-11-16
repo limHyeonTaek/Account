@@ -29,6 +29,6 @@ public class CreateAccount {
     public static class Response {
         private Long userId;
         private String accountNumber;
-        private LocalDateTime refisteredAt;
+        private LocalDateTime registeredAt;
     }
 }
