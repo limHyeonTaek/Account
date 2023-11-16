@@ -19,10 +19,12 @@ public class AccountController {
     public CreateAccount.Response createAccount(
             @RequestBody @Valid CreateAccount.Request request
     ) {
-        accountService.createAccount(
-                request.getUserId(),
-                request.getIntitialBalance());
-        return "success";
+        return CreateAccount.Response.from(
+                accountService.createAccount(
+                        request.getUserId(),
+                        request.getIntitialBalance()
+                )
+        );
     }
 
     @GetMapping("/get-lock")
@@ -31,10 +33,9 @@ public class AccountController {
     }
 
 
-
     @GetMapping("/account/{id}")
     public Account getAccount(
-            @PathVariable Long id){
+            @PathVariable Long id) {
         return accountService.getAccount(id);
     }
 }
