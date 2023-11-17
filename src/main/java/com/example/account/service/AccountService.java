@@ -107,9 +107,8 @@ public class AccountService {
     }
 
     private AccountUser getAccountUser(Long userId) {
-        AccountUser accountUser = accountUserRepository.findById(userId)
+        return accountUserRepository.findById(userId)
                 .orElseThrow(() -> new AccountException(USER_NOT_FOUND));
-        return accountUser;
     }
 }
 
