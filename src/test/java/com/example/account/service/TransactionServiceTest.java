@@ -81,7 +81,8 @@ class TransactionServiceTest {
                 "1000000000", USE_AMOUNT);
 
         // then
-        verify(transactionRepository, times(1)).save(captor.capture());
+        verify(transactionRepository, times(1))
+                .save(captor.capture());
         assertEquals(USE_AMOUNT, captor.getValue().getAmount());
         assertEquals(9800L, captor.getValue().getBalanceSnapshot());
         assertEquals(S, transactionDto.getTransactionResultType());
@@ -99,7 +100,8 @@ class TransactionServiceTest {
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> transactionService.useBalance(1L, "1000000000", 1000L));
+                () -> transactionService.useBalance(1L,
+                        "1000000000", 1000L));
 
         // then
         assertEquals(ErrorCode.USER_NOT_FOUND, exception.getErrorCode());
@@ -121,7 +123,8 @@ class TransactionServiceTest {
         ArgumentCaptor<Account> captor = ArgumentCaptor.forClass(Account.class);
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> transactionService.useBalance(1L, "1000000000", 1000L));
+                () -> transactionService.useBalance(1L,
+                        "1000000000", 1000L));
 
         // then
         assertEquals(ErrorCode.ACCOUNT_NOT_FOUND, exception.getErrorCode());
@@ -147,7 +150,8 @@ class TransactionServiceTest {
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> transactionService.useBalance(1L, "1234567890", 1000L));
+                () -> transactionService.useBalance(1L,
+                        "1234567890", 1000L));
 
         // then
         assertEquals(ErrorCode.USER_ACCOUNT_UN_MATCH, exception.getErrorCode());
@@ -171,7 +175,8 @@ class TransactionServiceTest {
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> transactionService.useBalance(1L, "1234567890", 1000L));
+                () -> transactionService.useBalance(1L,
+                        "1234567890", 1000L));
 
         // then
         assertEquals(ErrorCode.ACCOUNT_ALREADY_UNREGISTERED, exception.getErrorCode());
@@ -198,7 +203,8 @@ class TransactionServiceTest {
         // when
         // then
         AccountException exception = assertThrows(AccountException.class,
-                () -> transactionService.useBalance(1L, "1234567890", 1000L));
+                () -> transactionService.useBalance(1L,
+                        "1234567890", 1000L));
 
         assertEquals(ErrorCode.AMOUNT_EXCEED_BALANCE, exception.getErrorCode());
         verify(transactionRepository, times(0)).save(any());
@@ -232,10 +238,12 @@ class TransactionServiceTest {
 
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         // when
-        transactionService.saveFailedUseTransaction("1000000000", USE_AMOUNT);
+        transactionService.saveFailedUseTransaction(
+                "1000000000", USE_AMOUNT);
 
         // then
-        verify(transactionRepository, times(1)).save(captor.capture());
+        verify(transactionRepository, times(1))
+                .save(captor.capture());
         assertEquals(USE_AMOUNT, captor.getValue().getAmount());
         assertEquals(10000L, captor.getValue().getBalanceSnapshot());
         assertEquals(F, captor.getValue().getTransactionResultType());
@@ -278,13 +286,15 @@ class TransactionServiceTest {
 
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         // when
-        TransactionDto transactionDto = transactionService.cancelBalance("transactionId",
-                "1000000000", CANCEL_AMOUNT);
+        TransactionDto transactionDto = transactionService.cancelBalance(
+                "transactionId", "1000000000", CANCEL_AMOUNT);
 
         // then
-        verify(transactionRepository, times(1)).save(captor.capture());
+        verify(transactionRepository, times(1))
+                .save(captor.capture());
         assertEquals(CANCEL_AMOUNT, captor.getValue().getAmount());
-        assertEquals(10000L + CANCEL_AMOUNT, captor.getValue().getBalanceSnapshot());
+        assertEquals(10000L + CANCEL_AMOUNT, captor.getValue()
+                .getBalanceSnapshot());
         assertEquals(S, transactionDto.getTransactionResultType());
         assertEquals(CANCEL, transactionDto.getTransactionType());
         assertEquals(10000, transactionDto.getBalanceSnapshot());
@@ -302,7 +312,8 @@ class TransactionServiceTest {
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> transactionService.cancelBalance("transactionId", "1000000000", 1000L));
+                () -> transactionService.cancelBalance(
+                        "transactionId", "1000000000", 1000L));
 
         // then
         assertEquals(ErrorCode.ACCOUNT_NOT_FOUND, exception.getErrorCode());
@@ -317,7 +328,8 @@ class TransactionServiceTest {
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> transactionService.cancelBalance("transactionId", "1000000000", 1000L));
+                () -> transactionService.cancelBalance(
+                        "transactionId", "1000000000", 1000L));
 
         // then
         assertEquals(ErrorCode.TRANSACTION_NOT_FOUND, exception.getErrorCode());
@@ -481,10 +493,12 @@ class TransactionServiceTest {
                 .willReturn(Optional.of(transaction));
 
         // when
-        TransactionDto transactionDto = transactionService.queryTransaction("trxId");
+        TransactionDto transactionDto = transactionService.queryTransaction(
+                "trxId");
 
         // then
         assertEquals(USE, transactionDto.getTransactionType());
+
         assertEquals(S, transactionDto.getTransactionResultType());
         assertEquals(CANCEL_AMOUNT, transactionDto.getAmount());
         assertEquals("transactionId", transactionDto.getTransactionId());
@@ -499,7 +513,8 @@ class TransactionServiceTest {
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> transactionService.queryTransaction("transactionId"));
+                () -> transactionService.queryTransaction(
+                        "transactionId"));
 
         // then
         assertEquals(ErrorCode.TRANSACTION_NOT_FOUND, exception.getErrorCode());

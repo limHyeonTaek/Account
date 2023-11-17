@@ -52,14 +52,19 @@ class TransactionControllerTest {
         mockMvc.perform(post("/transaction/use")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
-                                new UseBalance.Request(1L, "2000000000", 3000L)
+                                new UseBalance.Request(1L,
+                                        "2000000000", 3000L)
                         ))
                 ).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.accountNumber").value("1000000000"))
-                .andExpect(jsonPath("$.transactionResultType").value("S"))
-                .andExpect(jsonPath("$.transactionId").value("transactionId"))
-                .andExpect(jsonPath("$.amount").value(12345));
+                .andExpect(jsonPath("$.accountNumber")
+                        .value("1000000000"))
+                .andExpect(jsonPath("$.transactionResultType")
+                        .value("S"))
+                .andExpect(jsonPath("$.transactionId")
+                        .value("transactionId"))
+                .andExpect(jsonPath("$.amount")
+                        .value(12345));
     }
 
     @Test
@@ -83,10 +88,14 @@ class TransactionControllerTest {
                         ))
                 ).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.accountNumber").value("1000000000"))
-                .andExpect(jsonPath("$.transactionResultType").value("S"))
-                .andExpect(jsonPath("$.transactionId").value("transactionIdForCancel"))
-                .andExpect(jsonPath("$.amount").value(54321));
+                .andExpect(jsonPath("$.accountNumber")
+                        .value("1000000000"))
+                .andExpect(jsonPath("$.transactionResultType")
+                        .value("S"))
+                .andExpect(jsonPath("$.transactionId")
+                        .value("transactionIdForCancel"))
+                .andExpect(jsonPath("$.amount")
+                        .value(54321));
     }
 
     @Test
@@ -107,11 +116,16 @@ class TransactionControllerTest {
         mockMvc.perform(get("/transaction/12345"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.accountNumber").value("1000000000"))
-                .andExpect(jsonPath("$.transactionType").value("USE"))
-                .andExpect(jsonPath("$.transactionResultType").value("S"))
-                .andExpect(jsonPath("$.transactionId").value("transactionIdForCancel"))
-                .andExpect(jsonPath("$.amount").value(54321));
+                .andExpect(jsonPath("$.accountNumber")
+                        .value("1000000000"))
+                .andExpect(jsonPath("$.transactionType")
+                        .value("USE"))
+                .andExpect(jsonPath("$.transactionResultType")
+                        .value("S"))
+                .andExpect(jsonPath("$.transactionId")
+                        .value("transactionIdForCancel"))
+                .andExpect(jsonPath("$.amount")
+                        .value(54321));
 
     }
 }

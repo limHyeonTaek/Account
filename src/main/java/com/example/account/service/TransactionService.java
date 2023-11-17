@@ -37,8 +37,6 @@ public class TransactionService {
      * 사용자 없는 경우, 계좌가 없는 경우, 사용자 아이디와 계좌 소유주가 다른 경우,
      * 계좌가 이미 해지 상태인 경우, 거래금액이 잔액보다 큰 경우,
      * 거래금액이 너무 작거나 큰 경우 실패 응답
-     * - 해당 계좌에서 거래(사용, 사용 취소)가 진행 중일 때
-     * 다른 거래 요청이 오는 경우 해당 거래가 동시에 잘못 처리되는 것을 방지해야 한다.
      */
     @Transactional
     public TransactionDto useBalance(Long userId, String accountNumber,

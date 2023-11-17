@@ -31,7 +31,8 @@ public class TransactionController {
     ) throws InterruptedException {
         try {
             Thread.sleep(3000L);
-            return UseBalance.Response.from(transactionService.useBalance(request.getUserId(),
+            return UseBalance.Response.from(transactionService
+                    .useBalance(request.getUserId(),
                     request.getAccountNumber(), request.getAmount())
             );
         } catch (AccountException e) {

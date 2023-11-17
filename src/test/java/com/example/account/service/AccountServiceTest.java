@@ -57,7 +57,8 @@ class AccountServiceTest {
         // 마지막 게좌에 + 1한 결과 증명 확인
         ArgumentCaptor<Account> captor = ArgumentCaptor.forClass(Account.class);
         // when
-        AccountDto accountDto = accountService.createAccount(1L, 1000L);
+        AccountDto accountDto = accountService.createAccount(
+                1L, 1000L);
 
         // then
         verify(accountRepository, times(1)).save(captor.capture());
@@ -144,7 +145,8 @@ class AccountServiceTest {
         // 마지막 게좌에 + 1한 결과 증명 확인
         ArgumentCaptor<Account> captor = ArgumentCaptor.forClass(Account.class);
         // when
-        AccountDto accountDto = accountService.deleteAccount(1L, "1234567890");
+        AccountDto accountDto = accountService.deleteAccount(
+                1L, "1234567890");
 
         // then
         verify(accountRepository, times(1)).save(captor.capture());
@@ -163,7 +165,8 @@ class AccountServiceTest {
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> accountService.deleteAccount(1L, "1234567890"));
+                () -> accountService.deleteAccount(
+                        1L, "1234567890"));
 
         // then
         assertEquals(ErrorCode.USER_NOT_FOUND, exception.getErrorCode());
@@ -183,7 +186,8 @@ class AccountServiceTest {
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> accountService.deleteAccount(1L, "1234567890"));
+                () -> accountService.deleteAccount(
+                        1L, "1234567890"));
 
         // then
         assertEquals(ErrorCode.ACCOUNT_NOT_FOUND, exception.getErrorCode());
@@ -209,14 +213,15 @@ class AccountServiceTest {
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> accountService.deleteAccount(1L, "1234567890"));
+                () -> accountService.deleteAccount(
+                        1L, "1234567890"));
 
         // then
         assertEquals(ErrorCode.USER_ACCOUNT_UN_MATCH, exception.getErrorCode());
     }
 
     @Test
-    @DisplayName("해지 계좌는 잔액이 업어야 한다.")
+    @DisplayName("해지 계좌는 잔액이 없어야 한다.")
     void deleteAccountFailed_balanceNotEmpty() {
         // given
         AccountUser pobi = AccountUser.builder()
@@ -232,7 +237,8 @@ class AccountServiceTest {
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> accountService.deleteAccount(1L, "1234567890"));
+                () -> accountService.deleteAccount(
+                        1L, "1234567890"));
 
         // then
         assertEquals(ErrorCode.BALANCE_NOT_EMPTY, exception.getErrorCode());
@@ -251,12 +257,13 @@ class AccountServiceTest {
                 .willReturn(Optional.of(Account.builder()
                         .accountUser(pobi)
                         .accountStatus(AccountStatus.UNREGISTERED)
-                        .balance(100L)
+                        .balance(0L)
                         .accountNumber("1000000012").build()));
 
         // when
         AccountException exception = assertThrows(AccountException.class,
-                () -> accountService.deleteAccount(1L, "1234567890"));
+                () -> accountService.deleteAccount(
+                        1L, "1234567890"));
 
         // then
         assertEquals(ErrorCode.ACCOUNT_ALREADY_UNREGISTERED, exception.getErrorCode());
